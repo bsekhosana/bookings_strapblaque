@@ -15,14 +15,8 @@ class Organization extends Model
         'slug',
         'email',
         'organization_id',
-        'subscription_type',
-        'subscription_start_date',
-        'subscription_end_date',
-        'max_bookings',
         'status',
     ];
-
-    const SUBSCRIPTION_TYPES = ['Trial', 'Basic', 'Startup', 'Premium', 'Enterprise'];
 
     const STATUSES = ['Active', 'Inactive', 'Suspended'];
 
@@ -33,5 +27,10 @@ class Organization extends Model
         static::creating(function ($organization) {
             $organization->slug = Str::random(12);
         });
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
     }
 }

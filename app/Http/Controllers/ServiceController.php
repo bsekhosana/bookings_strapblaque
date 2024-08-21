@@ -6,7 +6,7 @@ use App\Abstracts\ApiController;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
-class ServicesController extends ApiController
+class ServiceController extends ApiController
 {
     /**
      * Class constructor.
@@ -31,6 +31,7 @@ class ServicesController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
@@ -41,6 +42,7 @@ class ServicesController extends ApiController
     /**
      * Display the specified resource.
      *
+     * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Service $service)
@@ -51,6 +53,8 @@ class ServicesController extends ApiController
     /**
      * Update the specified resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, Service $service)
@@ -63,6 +67,7 @@ class ServicesController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Service $service)
