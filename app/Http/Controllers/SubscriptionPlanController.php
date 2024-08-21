@@ -2,65 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Organization;
+use App\Models\Subscription;
 use App\Models\SubscriptionPlan;
+use App\Services\PayFastService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class SubscriptionPlanController extends Controller
+/**
+ * @OA\Tag(
+ *     name="Subscription Plans",
+ *     description="Operations related to subscription plans"
+ * )
+ */
+class SubscriptionController extends Controller
 {
-    public function index()
-    {
-        $plans = SubscriptionPlan::all();
+    protected $payFastService;
 
-        return view('admin.subscription_plans.index', compact('plans'));
+    public function __construct(PayFastService $payFastService)
+    {
+        $this->payFastService = $payFastService;
     }
 
-    public function create()
-    {
-        return view('admin.subscription_plans.create');
-    }
-
-    public function store(Request $request)
-    {
-        $plan = new SubscriptionPlan;
-        $plan->name = $request->input('name');
-        $plan->max_bookings = $request->input('max_bookings');
-        $plan->has_sms_notifications = $request->input('has_sms_notifications', false);
-        $plan->has_email_notifications = $request->input('has_email_notifications', true);
-        $plan->price = $request->input('price');
-        $plan->duration_in_days = $request->input('duration_in_days');
-        $plan->status = $request->input('status');
-        $plan->save();
-
-        return redirect()->route('admin.subscription_plans.index');
-    }
-
-    public function edit($id)
-    {
-        $plan = SubscriptionPlan::findOrFail($id);
-
-        return view('admin.subscription_plans.edit', compact('plan'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $plan = SubscriptionPlan::findOrFail($id);
-        $plan->name = $request->input('name');
-        $plan->max_bookings = $request->input('max_bookings');
-        $plan->has_sms_notifications = $request->input('has_sms_notifications', false);
-        $plan->has_email_notifications = $request->input('has_email_notifications', true);
-        $plan->price = $request->input('price');
-        $plan->duration_in_days = $request->input('duration_in_days');
-        $plan->status = $request->input('status');
-        $plan->save();
-
-        return redirect()->route('admin.subscription_plans.index');
-    }
-
-    public function destroy($id)
-    {
-        $plan = SubscriptionPlan::findOrFail($id);
-        $plan->delete();
-
-        return redirect()->route('admin.subscription_plans.index');
-    }
 }

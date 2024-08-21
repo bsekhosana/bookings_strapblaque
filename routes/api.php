@@ -36,6 +36,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('services', ServiceController::class);
 });
 
+Route::get('/swagger', function () {
+    return response()->file(storage_path('api-docs/swagger.json'));
+});
+
+Route::get('/swagger-ui', function () {
+    return File::get(public_path('vendor/swagger-api/swagger-ui/dist/index.html'));
+});
 // Route::get('/bookings', [BookingController::class, 'index']);
 // Route::post('/bookings', [BookingController::class, 'store']);
 // Route::put('/bookings/{id}', [BookingController::class, 'update']);

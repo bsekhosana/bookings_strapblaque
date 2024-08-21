@@ -19501,6 +19501,24 @@ namespace Barryvdh\Debugbar\Facades {
             }
     }
 
+namespace L5Swagger {
+            /**
+     * 
+     *
+     */        class L5SwaggerFacade {
+                    /**
+         * 
+         *
+         * @throws L5SwaggerException
+         * @static 
+         */        public static function generateDocs()
+        {
+                        /** @var \L5Swagger\Generator $instance */
+                        return $instance->generateDocs();
+        }
+            }
+    }
+
 namespace Emotality\Panacea {
             /**
      * 
@@ -24980,6 +24998,7 @@ namespace  {
             class Gravatar extends \App\Helpers\Gravatar {}
             class Settings extends \App\Helpers\Settings {}
             class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
+            class L5Swagger extends \L5Swagger\L5SwaggerFacade {}
             class PanaceaMobile extends \Emotality\Panacea\PanaceaMobile {}
             class GeoIP extends \InteractionDesignFoundation\GeoIP\Facades\GeoIP {}
             class Horizon extends \Laravel\Horizon\Horizon {}

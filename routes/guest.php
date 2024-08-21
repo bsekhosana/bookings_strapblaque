@@ -33,3 +33,7 @@ Route::controller(\App\Http\Controllers\Guest\TestController::class)->prefix('te
     Route::get('otp', 'otpForm')->name('otp');
 
 });
+
+Route::get('/api/documentation', function () {
+    return view('swagger.index');
+});

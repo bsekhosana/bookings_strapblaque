@@ -6,6 +6,12 @@ use App\Abstracts\ApiController;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Tag(
+ *     name="Service",
+ *     description="Operations related to booking services"
+ * )
+ */
 class ServiceController extends ApiController
 {
     /**
@@ -17,9 +23,15 @@ class ServiceController extends ApiController
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Get(
+     *     path="/api/services",
+     *     tags={"Services"},
+     *     summary="List all services",
+     *     description="Returns a paginated list of all services.",
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=403, description="Unauthorized")
+     * )
      */
     public function index()
     {
@@ -29,21 +41,47 @@ class ServiceController extends ApiController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Post(
+     *     path="/api/services",
+     *     tags={"Services"},
+     *     summary="Create a new service",
+     *     description="Creates a new service.",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", example="Consultation"),
+     *             @OA\Property(property="duration", type="integer", example=60),
+     *             @OA\Property(property="price", type="number", format="float", example=100.00)
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Service created successfully"),
+     *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=403, description="Unauthorized")
+     * )
      */
     public function store(Request $request)
     {
-        //
+        // Implementation for storing a service goes here
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Service  $service
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Get(
+     *     path="/api/services/{id}",
+     *     tags={"Services"},
+     *     summary="Get a specific service",
+     *     description="Returns the details of a specific service.",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=404, description="Service not found"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=403, description="Unauthorized")
+     * )
      */
     public function show(Service $service)
     {
@@ -51,11 +89,31 @@ class ServiceController extends ApiController
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Service  $service
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Put(
+     *     path="/api/services/{id}",
+     *     tags={"Services"},
+     *     summary="Update a service",
+     *     description="Updates the details of a specific service.",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", example="Consultation"),
+     *             @OA\Property(property="duration", type="integer", example=60),
+     *             @OA\Property(property="price", type="number", format="float", example=120.00)
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Service updated successfully"),
+     *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=404, description="Service not found"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=403, description="Unauthorized")
+     * )
      */
     public function update(Request $request, Service $service)
     {
@@ -65,10 +123,22 @@ class ServiceController extends ApiController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Service  $service
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Delete(
+     *     path="/api/services/{id}",
+     *     tags={"Services"},
+     *     summary="Delete a service",
+     *     description="Deletes a specific service.",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=204, description="Service deleted successfully"),
+     *     @OA\Response(response=404, description="Service not found"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=403, description="Unauthorized")
+     * )
      */
     public function destroy(Service $service)
     {
