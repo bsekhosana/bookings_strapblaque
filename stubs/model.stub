@@ -1,0 +1,58 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Abstracts\CrudModel;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class {{ class }} extends CrudModel
+{
+    use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'slug',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        //
+    ];
+
+    /**
+     * The model's default attributes.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        //
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+}

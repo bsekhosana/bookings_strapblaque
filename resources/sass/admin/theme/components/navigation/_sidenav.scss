@@ -1,0 +1,168 @@
+// Base styling for the sidenav
+
+.sidenav {
+    background-color: $sidenav-light-bg;
+    color: $sidenav-light-color;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-wrap: nowrap;
+    font-size: 0.9rem;
+
+    .sidenav-menu {
+        flex-grow: 1;
+
+        .nav {
+            flex-direction: column;
+            flex-wrap: nowrap;
+
+            .sidenav-menu-heading {
+                padding: 1.75rem 1rem 0.75rem;
+                font-size: 0.7rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+
+            .nav-link {
+                color: $sidenav-light-link-color;
+                display: flex;
+                align-items: center;
+                line-height: normal;
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+                position: relative;
+
+                .nav-link-icon {
+                    color: $sidenav-light-icon-color;
+                    font-size: 0.9rem;
+                    padding-right: 0.5rem;
+                    display: inline-flex;
+
+                    //.fas {
+                    //    width: 1rem;
+                    //    height: 1rem;
+                    //}
+                }
+
+                &:hover {
+                    color: $sidenav-light-link-active-color;
+
+                    .nav-link-icon {
+                        color: $sidenav-light-link-active-color;
+                    }
+                }
+
+                &.active {
+                    color: $sidenav-light-link-active-color;
+                    font-weight: 600;
+
+                    .nav-icon {
+                        color: $primary;
+                    }
+
+                    .nav-link-icon {
+                        color: $sidenav-light-link-active-color;
+                    }
+                }
+
+                .sidenav-collapse-arrow {
+                    color: $sidenav-light-icon-color;
+                    display: inline-block;
+                    margin-left: auto;
+                    transition: transform 0.15s ease;
+                }
+
+                &.collapsed {
+                    .sidenav-collapse-arrow {
+                        transform: rotate(-90deg);
+                    }
+                }
+
+                .badge {
+                    padding: 0.125rem 0.25rem;
+                }
+            }
+
+            .sidenav-menu-nested {
+                flex-direction: column;
+                margin-left: 2rem - $sidenav-nested-border-offest;
+                border-left-style: solid;
+                border-left-width: thin;
+                padding-left: $sidenav-nested-border-offest;
+            }
+        }
+    }
+
+    .sidenav-footer {
+        background-color: $sidenav-light-footer-bg;
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        height: $footer-base-height;
+
+        .sidenav-footer-content {
+            font-size: 0.9rem;
+
+            .sidenav-footer-subtitle {
+                color: $gray-600;
+                font-size: 0.75rem;
+            }
+
+            .sidenav-footer-title {
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+@include color-mode(dark) {
+    .sidenav {
+        background-color: $sidenav-dark-bg;
+        color: $sidenav-dark-color;
+
+        .sidenav-menu {
+            .sidenav-menu-heading {
+                color: $sidenav-dark-heading-color;
+            }
+
+            .nav-link {
+                color: $sidenav-dark-link-color;
+
+                .nav-link-icon {
+                    color: $sidenav-dark-icon-color;
+                }
+
+                .sidenav-collapse-arrow {
+                    color: $sidenav-dark-icon-color;
+                }
+
+                &:hover {
+                    color: $sidenav-dark-link-active-color;
+
+                    .nav-link-icon {
+                        color: $sidenav-dark-link-active-color;
+                    }
+                }
+
+                &.active {
+                    color: var(--bs-link-color);
+
+                    .nav-link-icon {
+                        color: var(--bs-link-color);
+                    }
+                }
+            }
+        }
+
+        .sidenav-menu-nested {
+            border-left-color: fade-out($white, 0.85);
+        }
+
+        .sidenav-footer {
+            background-color: $sidenav-dark-footer-bg;
+        }
+    }
+}

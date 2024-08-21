@@ -1,0 +1,89 @@
+{
+    "name": "laravel/nova",
+    "description": "A wonderful administration interface for Laravel.",
+    "keywords": [
+        "laravel",
+        "admin"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Taylor Otwell",
+            "email": "taylor@laravel.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "ext-json": "*",
+        "brick/money": "^0.8.0",
+        "doctrine/dbal": "^3.1.2",
+        "illuminate/support": "^11.0",
+        "inertiajs/inertia-laravel": "^1.0",
+        "laravel/ui": "^4.0",
+        "nesbot/carbon": "^2.53.1",
+        "rap2hpoutre/fast-excel": "^5.0",
+        "spatie/once": "^3.0",
+        "symfony/console": "^7.0",
+        "symfony/finder": "^7.0",
+        "symfony/polyfill-intl-icu": "^1.22.1",
+        "symfony/process": "^7.0"
+    },
+    "require-dev": {
+        "laravel/framework": "^11.0",
+        "laravel/pint": "^1.4",
+        "laravel/scout": "^9.8",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/larastan": "^2.4",
+        "orchestra/testbench-dusk": "^8.0",
+        "phpunit/phpunit": "^9.5.27",
+        "predis/predis": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravel\\Nova\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Laravel\\Nova\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Laravel\\Nova\\NovaCoreServiceProvider"
+            ],
+            "aliases": {
+                "Nova": "Laravel\\Nova\\Nova"
+            }
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.3"
+        },
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        },
+        "preferred-install": {
+            "laravel/nova-dusk-suite": "source",
+            "*": "auto"
+        },
+        "sort-packages": true
+    },
+    "suggest": {
+        "ext-intl": "Required to format Currency field"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel/nova-dusk-suite"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "version": "4.22.0"
+}

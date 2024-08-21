@@ -1,0 +1,22 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+//$font-family-sans-serif: 'Lato', sans-serif;
+$font-family-monospace: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+$font-size-base: 1.0rem;
+$font-weight-bold: 600;
+$font-weight-bolder: 700;
+$line-height-base: 1.6;
+$input-placeholder-color: rgba(173, 181, 189, 0.7);
+
+// Breadcrumbs
+$breadcrumb-padding-x: 1rem;
+$breadcrumb-padding-y: .75rem;
+$breadcrumb-margin-bottom: 1rem;
+$breadcrumb-border-radius: .25rem;
+$breadcrumb-bg: #e9ecef;
+
+// Switches
+$form-switch-focus-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{tint-color($primary, 50%)}'/></svg>");
+$form-switch-checked-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#fff'/></svg>");

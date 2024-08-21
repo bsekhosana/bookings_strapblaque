@@ -1,0 +1,74 @@
+// Soft color variations
+
+$red-soft: mix($gray-100, $red, 85%);
+$orange-soft: mix($gray-100, $orange, 85%);
+$yellow-soft: mix($gray-100, $yellow, 85%);
+$green-soft: mix($gray-100, $green, 85%);
+$teal-soft: mix($gray-100, $teal, 85%);
+$cyan-soft: mix($gray-100, $cyan, 85%);
+$blue-soft: mix($gray-100, $blue, 85%);
+$indigo-soft: mix($gray-100, $indigo, 85%);
+$purple-soft: mix($gray-100, $purple, 85%);
+$pink-soft: mix($gray-100, $pink, 85%);
+
+$primary-soft: mix($gray-100, $primary, 85%);
+$secondary-soft: mix($gray-100, $secondary, 85%);
+$success-soft: mix($gray-100, $success, 85%);
+$info-soft: mix($gray-100, $info, 85%);
+$warning-soft: mix($gray-100, $warning, 85%);
+$danger-soft: mix($gray-100, $danger, 85%);
+
+// scss-docs-start theme-colors-map
+$theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger,
+    "light": $light,
+    "dark": $dark
+);
+// scss-docs-end theme-colors-map
+
+$expanded-colors: (
+    'black': $black,
+    'gray': $gray-600,
+    'white': $white,
+    'red': $red,
+    'orange': $orange,
+    'yellow': $yellow,
+    'green': $green,
+    'teal': $teal,
+    'cyan': $cyan,
+    'blue': $blue,
+    'indigo': $indigo,
+    'purple': $purple,
+    'pink': $pink,
+    'red-soft': $red-soft,
+    'orange-soft': $orange-soft,
+    'yellow-soft': $yellow-soft,
+    'green-soft': $green-soft,
+    'teal-soft': $teal-soft,
+    'cyan-soft': $cyan-soft,
+    'blue-soft': $blue-soft,
+    'indigo-soft': $indigo-soft,
+    'purple-soft': $purple-soft,
+    'pink-soft': $pink-soft,
+    'primary-soft': $primary-soft,
+    'secondary-soft': $secondary-soft,
+    'success-soft': $success-soft,
+    'info-soft': $info-soft,
+    'warning-soft': $warning-soft,
+    'danger-soft': $danger-soft,
+    // Brands
+    'ince': $ince,
+    'coaxle': $coaxle,
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $expanded-colors);
+
+// The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
+// See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
+$min-contrast-ratio: 1.9;

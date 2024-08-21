@@ -1,0 +1,20 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Contracts\Validation\ValidationRule;
+
+class {{ class }} implements ValidationRule
+{
+    /**
+     * Run the validation rule.
+     *
+     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     */
+    public function validate(string $attribute, mixed $value, \Closure $fail): void
+    {
+        if ('first value' != 'second value') {
+            $fail('Validation error message.');
+        }
+    }
+}

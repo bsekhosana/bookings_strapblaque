@@ -1,0 +1,49 @@
+@extends('layouts.admin')
+
+@section('page_title', 'View {{singular_word_cap}}')
+
+@section('content')
+    <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+        <div class="container-xl px-4">
+            <div class="page-header-content pt-4">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-auto mt-4">
+                        <h1 class="page-header-title">
+                            <div class="page-header-icon"><i class="fas fa-fw fa-eye"></i></div>
+                            View {{singular_word_cap}}
+                        </h1>
+                        <div class="page-header-subtitle">
+                            Viewing {{an_or_a}} {{singular_word}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container-xl px-4 mt-n10">
+        <div class="card card-header-actions">
+            <div class="card-header">{{singular_word_cap}}</div>
+            <div class="card-body">
+                <form class="needs-validation">
+
+                    <x-readonly.text label="xxx" key="xxx" :value="${{singular_variable}}->xxx"/>
+
+                    <x-readonly.datetime label="Created At" key="created_at" :value="${{singular_variable}}->created_at"/>
+
+                    <x-readonly.datetime label="Updated At" key="updated_at" :value="${{singular_variable}}->updated_at"/>
+
+                    <div class="row">
+                        <div class="offset-md-3 offset-xxl-2 col-xl-8">
+                            <a href="{{ ${{singular_variable}}->indexRoute() }}" class="me-1 btn btn-secondary">
+                                <i class="fas fa-fw fa-arrow-left me-1"></i> Back
+                            </a>
+                            <a href="{{ ${{singular_variable}}->editRoute() }}" class="me-1 btn btn-primary">
+                                <i class="fas fa-fw fa-pencil-alt me-1"></i> Edit
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection

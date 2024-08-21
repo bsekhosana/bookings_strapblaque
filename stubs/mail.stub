@@ -1,0 +1,41 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Models\User;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class {{ class }} extends Mailable implements ShouldQueue
+{
+    use Queueable, SerializesModels;
+
+    /**
+     * Create a new message instance.
+     *
+     * @param  \App\Models\User  $user
+     * @return void
+     */
+    public function __construct(public User $user)
+    {
+        // Mail & Queue options
+        $this->queue = 'notifications';
+        $this->delay = 0;
+        $this->theme = 'default';
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        $this->to($this->user);
+        $this->subject('');
+
+        return $this->view('view.name');
+    }
+}

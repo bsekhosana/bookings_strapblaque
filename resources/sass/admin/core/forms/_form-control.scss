@@ -1,0 +1,38 @@
+// Custom form control solid component
+//
+// Append the .form-control-solid class to a .form-control input
+// to get a solid styling for the input
+
+.form-control-solid {
+    background-color: $input-solid-bg;
+    border-color: $input-solid-border-color;
+
+    &:focus {
+        background-color: $input-solid-bg;
+    }
+}
+
+@include color-mode(dark) {
+    .form-control, .form-select {
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        color: $gray-400;
+
+        &.is-invalid {
+            //border-color: var(--bs-form-invalid-color);
+            border-color: $red;
+        }
+
+        &:focus {
+            border: var(--bs-border-width) solid mix($primary, $white);
+            //outline: none;
+        }
+
+        &::placeholder {
+            color: darken($gray-600, 5%);
+        }
+
+        &::-ms-input-placeholder { /* Edge 12 -18 */
+            color: darken($gray-600, 5%);
+        }
+    }
+}

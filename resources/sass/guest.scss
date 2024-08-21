@@ -1,0 +1,18 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,600,700,900');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=JetBrains+Mono:400,700');
+
+// Variables
+@import 'guest/variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// Packages
+@import '@fortawesome/fontawesome-free/css/all.css';
+//@import 'flatpickr/dist/flatpickr.css';
+
+// Custom SCSS
+@import 'guest/custom';
+@import 'guest/dark-mode';

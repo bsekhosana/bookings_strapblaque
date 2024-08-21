@@ -1,0 +1,111 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ rootNamespace }}Http\Controllers\Controller;
+use {{ namespacedRequests }}
+use {{ namespacedModel }};
+
+class {{ class }} extends Controller
+{
+    /**
+     * Class constructor.
+     */
+    public function __construct()
+    {
+        //$this->middleware([]);
+        //$this->authorizeResource({{ model }}::class, '{{ modelVariable }}');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        ${{ modelVariable }}s = {{ model }}::latest('id')->paginate();
+        ${{ modelVariable }}s->loadCrudRoutes();
+
+        return view('admin.{{ modelVariable }}s.index')->with(compact('{{ modelVariable }}s'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function create()
+    {
+        return view('admin.{{ modelVariable }}s.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \{{ namespacedStoreRequest }}  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store({{ storeRequest }} $request)
+    {
+        ${{ modelVariable }} = {{ model }}::create($request->validated());
+
+        \Alert::crud(${{ modelVariable }}, \Alert::Stored, '{{ modelVariable }}');
+
+        return redirect()->route('admin.{{ modelVariable }}s.show', ${{ modelVariable }});
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function show({{ model }} ${{ modelVariable }})
+    {
+        return view('admin.{{ modelVariable }}s.show')->with(compact('{{ modelVariable }}'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function edit({{ model }} ${{ modelVariable }})
+    {
+        return view('admin.{{ modelVariable }}s.edit')->with(compact('{{ modelVariable }}'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \{{ namespacedUpdateRequest }}  $request
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
+    {
+        $updated = ${{ modelVariable }}->update($request->validated());
+
+        \Alert::crud($updated, \Alert::Updated, '{{ modelVariable }}');
+
+        return redirect()->route('admin.{{ modelVariable }}s.show', ${{ modelVariable }});
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy({{ model }} ${{ modelVariable }})
+    {
+        $deleted = ${{ modelVariable }}->delete();
+
+        \Alert::crud($deleted, \Alert::Deleted, '{{ modelVariable }}');
+
+        return redirect()->route('admin.{{ modelVariable }}s.index');
+    }
+}

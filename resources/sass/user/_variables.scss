@@ -1,0 +1,95 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Poppins', sans-serif;
+$font-size-base: 1.0rem;
+$font-weight-bold: 600;
+$font-weight-bolder: 700;
+$line-height-base: 1.6;
+$input-placeholder-color: rgba(73, 80, 87, 0.2);
+
+// The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
+// See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
+$min-contrast-ratio:   3 !default;
+
+// Breadcrumbs
+$breadcrumb-padding-x: 1rem;
+$breadcrumb-padding-y: .75rem;
+$breadcrumb-margin-bottom: 1rem;
+$breadcrumb-border-radius: .25rem;
+$breadcrumb-bg: #e9ecef;
+
+// Colors
+$blue: #2271d2;
+$indigo: #4b4ca1;
+$purple: #5a4bab;
+$pink: #ec1461;
+$red: #dc3545;
+$orange: #f56b38;
+$yellow: #fba330;
+$green: #2ca967;
+$teal: #2ea290;
+$cyan: #32a5c1;
+
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000;
+
+// Brands
+$laravel: #f9322c;
+$ince: #c2133e;
+$coaxle: #de1f26;
+$google: #ea4335;
+$facebook: #1877f2;
+$twitter: #000000;
+
+$primary: $laravel; /* $blue */
+$secondary: $black; /* $gray-600 */
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-100;
+$dark: $gray-900;
+
+$theme-colors: (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "light":      $light,
+    "dark":       $dark
+) !default;
+
+$expanded-colors: (
+    'blue': $blue,
+    'indigo': $indigo,
+    'purple': $purple,
+    'pink': $pink,
+    'red': $red,
+    'orange': $orange,
+    'yellow': $yellow,
+    'green': $green,
+    'teal': $teal,
+    'cyan': $cyan,
+    'white': $white,
+    'black': $black,
+    // Brands
+    'google': $google,
+    'facebook': $facebook,
+    'twitter': $twitter,
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $expanded-colors);

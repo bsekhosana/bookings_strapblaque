@@ -1,0 +1,54 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Models\User;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+
+class {{ class }} extends Notification implements ShouldQueue
+{
+    use Queueable;
+
+    /**
+     * Create a new notification instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // Notification & Queue options
+        $this->queue = 'notifications';
+        $this->delay = 0;
+    }
+
+    /**
+     * Get the notification's delivery channels.
+     */
+    public function via(User $notifiable): array
+    {
+        return ['mail'];
+    }
+
+    /**
+     * Get the mail representation of the notification.
+     */
+    public function toMail(User $notifiable): MailMessage
+    {
+        return (new MailMessage)
+            ->theme('default')
+            ->markdown('{{ view }}');
+    }
+
+    /**
+     * Get the array representation of the notification.
+     */
+    public function toDatabase(User $notifiable): array
+    {
+        return [
+            //
+        ];
+    }
+}

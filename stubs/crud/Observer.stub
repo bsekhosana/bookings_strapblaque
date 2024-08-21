@@ -1,0 +1,124 @@
+<?php
+
+namespace App\Observers;
+
+use App\Models\{{model}};
+
+class {{model}}Observer
+{
+    /**
+     * Handle the "retrieved" event.
+     */
+    public function retrieved({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "creating" event.
+     */
+    public function creating({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "created" event.
+     */
+    public function created({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "replicating" event.
+     */
+    public function replicating({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "updating" event.
+     */
+    public function updating({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "updated" event.
+     */
+    public function updated({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "saving" event.
+     */
+    public function saving({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "saved" event.
+     */
+    public function saved({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "trashed" event.
+     * Only when SoftDeletes trait is being used.
+     */
+    public function trashed({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "restoring" event.
+     * Only when SoftDeletes trait is being used.
+     */
+    public function restoring({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "restored" event.
+     * Only when SoftDeletes trait is being used.
+     */
+    public function restored({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "deleting" event.
+     */
+    public function deleting({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "deleted" event.
+     */
+    public function deleted({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+
+    /**
+     * Handle the "force deleted" event.
+     * Only when SoftDeletes trait is being used.
+     */
+    public function forceDeleted({{model}} ${{singular_variable}}): void
+    {
+        //
+    }
+}

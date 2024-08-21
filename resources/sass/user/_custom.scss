@@ -1,0 +1,108 @@
+// Footer overlay issue
+body {
+    margin-bottom: 55px;
+}
+
+// Required fields red *
+label.required:after {
+    content: " *";
+    color: $danger;
+}
+
+// Typography
+.small, small {
+    font-size: .875rem;
+}
+
+.smaller {
+    font-size: .75rem;
+}
+
+.smallest {
+    font-size: .6rem;
+}
+
+.form-control.font-mono {
+    font-family: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.875rem;
+}
+
+.font-mono {
+    font-family: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9375rem;
+}
+
+.font-helv {
+    font-family: 'Helvetica', sans-serif;
+}
+
+.font-lato {
+    font-family: 'Lato', sans-serif;
+}
+
+.font-mont {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.font-robo {
+    font-family: 'Roboto', sans-serif;
+}
+
+// Buttons
+.btn {
+    --bs-btn-border-radius: 0.5rem;
+}
+
+// List Group
+.list-group {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+
+    .list-group-item {
+        border-color: rgba(0, 0, 0, 0.07);
+    }
+}
+
+// Cards
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+
+    .card-header:first-child {
+        border-radius: 0.5rem 0.5rem 0 0;
+    }
+
+    .card-header {
+        padding: 0.8rem 1rem;
+        margin-bottom: 0;
+        background-color: rgba(0, 0, 0, 0.03);
+        border-bottom: none;
+        //text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+    }
+
+    .card-footer {
+        border-top: none;
+    }
+}
+
+// Breadcrumbs
+.breadcrumb {
+    border-radius: 0.5rem;
+
+    .breadcrumb-item {
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// Alerts
+.alert {
+    margin-bottom: 0;
+}

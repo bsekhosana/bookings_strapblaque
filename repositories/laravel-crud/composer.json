@@ -1,0 +1,43 @@
+{
+    "name": "emotality/laravel-crud",
+    "description": "Laravel package to help creating resources from models.",
+    "type": "library",
+    "keywords": [
+        "laravel",
+        "package"
+    ],
+    "license": "MIT",
+    "homepage": "https://emotality.com",
+    "authors": [
+        {
+            "name": "Jean-Pierre Fourie",
+            "homepage": "https://emotality.com",
+            "email": "jp@emotality.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "barryvdh/reflection-docblock": "^2.1.1",
+        "illuminate/console": "^11.0",
+        "illuminate/support": "^11.0",
+        "laravel/prompts": "^0.1.20",
+        "phpdocumentor/reflection-common": "^2.2.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.15"
+    },
+    "autoload": {
+        "psr-4": {
+            "Emotality\\CRUD\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Emotality\\CRUD\\CrudServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
