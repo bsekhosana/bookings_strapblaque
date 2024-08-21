@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\SendBookingReminders;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('cronjob:housekeeping')->dailyAt('03:33');
         $schedule->command('cronjob:geoip-update')->weeklyOn(Schedule::SUNDAY, '03:03');
 
+        $schedule->job(new SendBookingReminders)->dailyAt('08:00'); // Adjust the time as needed
         // Custom
         // $schedule->command('example:command')->dailyAt('03:00');
     }

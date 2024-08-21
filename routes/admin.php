@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\OrganizationController;
+use App\Http\Controllers\SubscriptionPlanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,4 +35,9 @@ Route::controller(\App\Http\Controllers\Admin\ProfileController::class)->prefix(
 
     Route::put('security', 'updateSecurity');
 
+});
+
+Route::middleware(['auth', 'can:admin'])->group(function () {
+    Route::resource('subscription_plans', SubscriptionPlanController::class);
+    Route::resource('organizations', OrganizationController::class);
 });

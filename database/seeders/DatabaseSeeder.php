@@ -19,6 +19,10 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             AdminSeeder::class,
             UserSeeder::class,
+
+            SubscriptionPlanSeeder::class,
+            OrganizationSeeder::class,
+            SubscriptionSeeder::class,
         ]);
 
         /* ---------------------------- */

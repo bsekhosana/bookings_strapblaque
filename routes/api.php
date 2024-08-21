@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,5 +28,21 @@ Route::put('admin/theme', [\App\Http\Controllers\Api\Admin\AdminController::clas
 
 Route::put('user/theme', [\App\Http\Controllers\Api\User\UserController::class, 'theme']);
 
-
 Route::get('user', [\App\Http\Controllers\Api\UserController::class, 'self']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('bookings', BookingController::class);
+    Route::apiResource('subscriptions', SubscriptionController::class);
+    Route::apiResource('services', ServiceController::class);
+});
+
+// Route::get('/bookings', [BookingController::class, 'index']);
+// Route::post('/bookings', [BookingController::class, 'store']);
+// Route::put('/bookings/{id}', [BookingController::class, 'update']);
+// Route::delete('/bookings/{id}', [BookingController::class, 'destroy']);
+
+// Route::get('/subscription/plans', [SubscriptionController::class, 'showPlans'])->name('subscription.plans');
+// Route::post('/subscription/payment', [SubscriptionController::class, 'initiatePayment'])->name('subscription.payment');
+// Route::get('/payment/success', [SubscriptionController::class, 'paymentSuccess'])->name('subscription.payment.success');
+// Route::get('/payment/cancel', [SubscriptionController::class, 'paymentCancel'])->name('subscription.payment.cancel');
+// Route::post('/payment/notify', [SubscriptionController::class, 'paymentNotify'])->name('subscription.payment.notify');

@@ -82,6 +82,20 @@ namespace App\Models{
 /**
  * 
  *
+ * @property-read \App\Models\Organization|null $organization
+ * @property-read \App\Models\Service|null $service
+ * @property-read \App\Models\Subscription|null $subscription
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Booking newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Booking newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Booking query()
+ */
+	class Booking extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -103,6 +117,60 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property string $email
+ * @property string $organization_id
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization query()
+ */
+	class Organization extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $slug
+ * @property int $organization_id
+ * @property string|null $primary_color
+ * @property string|null $secondary_color
+ * @property string|null $logo_small
+ * @property string|null $logo_large
+ * @property string|null $time_zone
+ * @property int $appointment_duration
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Organization $organization
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrganizationSetting newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrganizationSetting newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrganizationSetting query()
+ */
+	class OrganizationSetting extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property-read \App\Models\Organization|null $organization
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Service newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Service newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Service query()
+ */
+	class Service extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property bool $editable
  * @property string $type
  * @property string $key
@@ -113,6 +181,49 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Setting query()
  */
 	class Setting extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $organization_id
+ * @property int $subscription_plan_id
+ * @property string $start_date
+ * @property string $end_date
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Organization $organization
+ * @property-read \App\Models\SubscriptionPlan $plan
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription query()
+ */
+	class Subscription extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property int $max_bookings
+ * @property int $has_sms_notifications
+ * @property int $has_email_notifications
+ * @property string $price
+ * @property int $duration_in_days
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SubscriptionPlan newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SubscriptionPlan newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SubscriptionPlan query()
+ */
+	class SubscriptionPlan extends \Eloquent {}
 }
 
 namespace App\Models{
