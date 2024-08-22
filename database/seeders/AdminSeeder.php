@@ -22,6 +22,13 @@ class AdminSeeder extends Seeder
                 'mobile'     => '0820001234',
                 'password'   => null,
             ],
+            [
+                'first_name' => 'Jane',
+                'last_name'  => 'Smith',
+                'email'      => 'admin2@example.com',
+                'mobile'     => '0830005678',
+                'password'   => null,
+            ],
         ];
 
         $now = now();

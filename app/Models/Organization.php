@@ -33,4 +33,16 @@ class Organization extends Model
     {
         return $this->hasMany(Subscription::class);
     }
+
+    // Define the relationship with Admin
+    public function admins()
+    {
+        return $this->belongsToMany(Admin::class, 'organization_admin');
+    }
+
+    // Define the relationship with User
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'organization_user');
+    }
 }

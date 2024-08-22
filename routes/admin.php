@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\OrganizationController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SubscriptionPlanController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +40,17 @@ Route::controller(\App\Http\Controllers\Admin\ProfileController::class)->prefix(
 });
 
 Route::middleware(['auth', 'can:admin'])->group(function () {
-    Route::resource('subscription_plans', SubscriptionPlanController::class);
+    // Route::resource('subscription_plans', SubscriptionPlanController::class);
     Route::resource('organizations', OrganizationController::class);
 });
+
+Route::get('/bookings', [BookingController::class, 'index']);
+Route::post('/bookings', [BookingController::class, 'store']);
+Route::put('/bookings/{id}', [BookingController::class, 'update']);
+Route::delete('/bookings/{id}', [BookingController::class, 'destroy']);
+
+Route::get('/subscription/plans', [SubscriptionController::class, 'showPlans'])->name('subscription.plans');
+Route::post('/subscription/payment', [SubscriptionController::class, 'initiatePayment'])->name('subscription.payment');
+Route::get('/payment/success', [SubscriptionController::class, 'paymentSuccess'])->name('subscription.payment.success');
+Route::get('/payment/cancel', [SubscriptionController::class, 'paymentCancel'])->name('subscription.payment.cancel');
+Route::post('/payment/notify', [SubscriptionController::class, 'paymentNotify'])->name('subscription.payment.notify');

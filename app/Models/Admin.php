@@ -166,6 +166,12 @@ class Admin extends CrudAuthModel
         return \Gravatar::get($this->email, $size);
     }
 
+    // Define the relationship with Organization
+    public function organizations()
+    {
+        return $this->belongsToMany(Organization::class, 'organization_admin');
+    }
+
     /**
      * Search & filter models.
      */

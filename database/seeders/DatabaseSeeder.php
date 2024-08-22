@@ -16,13 +16,18 @@ class DatabaseSeeder extends Seeder
         /* ---------------------------- */
 
         $this->call([
+
             SettingSeeder::class,
+
             AdminSeeder::class,
             UserSeeder::class,
 
             SubscriptionPlanSeeder::class,
             OrganizationSeeder::class,
             SubscriptionSeeder::class,
+
+            OrganizationAdminSeeder::class,
+            OrganizationUserSeeder::class,
         ]);
 
         /* ---------------------------- */

@@ -145,4 +145,10 @@ class User extends CrudAuthModel implements MustVerifyEmail
             ->orderBy('last_name')
             ->paginate();
     }
+
+    // Define the relationship with Organization
+    public function organizations()
+    {
+        return $this->belongsToMany(Organization::class, 'organization_user');
+    }
 }
