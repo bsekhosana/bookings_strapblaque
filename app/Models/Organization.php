@@ -11,10 +11,11 @@ class Organization extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
         'slug',
+        'name',
         'email',
-        'organization_id',
+        'address',
+        'phone',
         'status',
     ];
 
@@ -32,6 +33,11 @@ class Organization extends Model
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class);
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
     }
 
     // Define the relationship with Admin

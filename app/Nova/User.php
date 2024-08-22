@@ -42,6 +42,8 @@ class User extends Resource
         'first_name',
         'last_name',
         'email',
+        'mobile',
+        'slug'
     ];
 
     /**
@@ -64,10 +66,18 @@ class User extends Resource
                 ->rules('required', 'max:255')
                 ->sortable(),
 
+            Text::make('Slug')
+                ->rules('required', 'max:255')
+                ->sortable(),
+
             Text::make('Email')
                 ->rules('required', 'email', 'max:255')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}')
+                ->sortable(),
+
+            Text::make('Mobile')
+                ->rules('required', 'max:255')
                 ->sortable(),
 
             Password::make('Password')

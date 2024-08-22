@@ -20,19 +20,22 @@ class OrganizationSeeder extends Seeder
             [
                 'name' => 'Alpha Corp',
                 'email' => 'contact@alphacorp.com',
-                'organization_id' => 'alpha123',
+                'phone' => '+238 348 5587',
+                'address' => '20 Real beverly drive, San Fran',
                 'status' => 'Active',
             ],
             [
                 'name' => 'Beta LLC',
                 'email' => 'info@betallc.com',
-                'organization_id' => 'beta456',
+                'phone' => '+009 6578 8876',
+                'address' => '16 West Street, United States',
                 'status' => 'Active',
             ],
             [
                 'name' => 'Gamma Group',
                 'email' => 'support@gammagroup.com',
-                'organization_id' => 'gamma789',
+                'phone' => '546 78554 332',
+                'address' => '101 Rodeo Drive, Miami',
                 'status' => 'Active',
             ],
         ];

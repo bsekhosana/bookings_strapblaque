@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
             $table->foreignId('organization_id')->constrained('organizations')->onDelete('cascade');
             $table->string('name');
             $table->integer('duration'); // Duration in minutes

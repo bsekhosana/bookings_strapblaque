@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
                 'first_name' => 'John',
                 'last_name'  => 'Doe',
                 'email'      => 'user@example.com',
+                'mobile'     => '+27 67 343 9076',
                 'password'   => null,
             ],
         ];

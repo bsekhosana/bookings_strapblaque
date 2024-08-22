@@ -6,26 +6,20 @@ use App\Helpers\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class OrganizationAdmin extends Model
 {
     use HasFactory;
 
+    protected $table = 'organization_admin';
+
     protected $fillable = [
-        'slug',
+        'admin_id',
         'organization_id',
-        'name',
-        'duration',
-        'price',
-        'description',
     ];
 
-    protected static function boot()
+    public function admin()
     {
-        parent::boot();
-
-        static::creating(function ($service) {
-            $service->slug = Str::random(12);
-        });
+        return $this->belongsTo(Admin::class);
     }
 
     public function organization()

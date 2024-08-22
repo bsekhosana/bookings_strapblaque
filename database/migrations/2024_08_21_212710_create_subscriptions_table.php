@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
             $table->foreignId('organization_id')->constrained('organizations')->onDelete('cascade');
             $table->foreignId('subscription_plan_id')->constrained('subscription_plans')->onDelete('cascade');
             $table->date('start_date');

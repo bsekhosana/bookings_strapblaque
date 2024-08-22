@@ -10,6 +10,7 @@ class Booking extends Model
     use HasFactory;
 
     protected $fillable = [
+        'slug',
         'organization_id',
         'subscription_id',
         'service_id',
@@ -19,6 +20,18 @@ class Booking extends Model
         'start_time',
         'end_time',
         'status',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'created_at'        => 'datetime',
+        'updated_at'        => 'datetime',
+        'start_time'        => 'datetime',
+        'end_time'        => 'datetime',
     ];
 
     const STATUSES = ['Scheduled', 'Completed', 'Canceled'];
@@ -36,5 +49,10 @@ class Booking extends Model
     public function service()
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

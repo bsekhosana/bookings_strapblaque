@@ -34,4 +34,8 @@ class OrganizationSetting extends Model
     {
         return $this->belongsTo(Organization::class);
     }
+
+    public function services(){
+        return $this->hasMany(Service::class);
+    }
 }

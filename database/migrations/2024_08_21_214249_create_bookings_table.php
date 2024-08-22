@@ -14,12 +14,11 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
             $table->foreignId('organization_id')->constrained('organizations')->onDelete('cascade');
             $table->foreignId('subscription_id')->constrained('subscriptions')->onDelete('cascade');
             $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
-            $table->string('client_name');
-            $table->string('client_email')->nullable();
-            $table->string('client_phone')->nullable();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->enum('status', Booking::STATUSES)->default('Scheduled');

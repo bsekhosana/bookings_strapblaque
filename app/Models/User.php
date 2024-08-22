@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Abstracts\CrudAuthModel;
+use App\Helpers\Str;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,12 +21,24 @@ class User extends CrudAuthModel implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
+        'slug',
         'first_name',
         'last_name',
         'email',
+        'mobile',
         'avatar',
+        'mobile',
         'password',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->slug = Str::random(12);
+        });
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -150,5 +163,9 @@ class User extends CrudAuthModel implements MustVerifyEmail
     public function organizations()
     {
         return $this->belongsToMany(Organization::class, 'organization_user');
+    }
+
+    public function bookings(){
+        return $this->hasMany(Booking::class);
     }
 }
