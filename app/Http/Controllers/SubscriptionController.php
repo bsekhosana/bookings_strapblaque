@@ -24,6 +24,20 @@ class SubscriptionController extends Controller
         $this->payFastService = $payFastService;
     }
 
+    public function showOrganizationActivation()
+    {
+        $plans = SubscriptionPlan::where('status', 'Active')->get();
+
+        return view('admin.organizations.activation', compact('plans'));
+    }
+
+    public function activateOrganization(Request $request)
+    {
+
+
+        return response()->json(['redirect_url' => $response['redirect_url']]);
+    }
+
     /**
      * @OA\Get(
      *     path="/api/subscription/plans",

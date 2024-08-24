@@ -135,7 +135,7 @@ class AdminLoginController extends Controller
             'email' => $validated['org_email'],
             'address' => $validated['org_address'],
             'phone' => $validated['org_phone'],
-            'status' => 'Active', // Default status
+            'status' => 'Pending Activation', // Default status
         ]);
 
         // Create the admin

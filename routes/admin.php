@@ -19,7 +19,6 @@ Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'dashbo
 
 Route::resource('contact_forms', \App\Http\Controllers\Admin\ContactFormController::class)->only(['index', 'show', 'destroy']);
 
-
 Route::resource('admins', \App\Http\Controllers\Admin\AdminController::class);
 
 Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
@@ -40,6 +39,9 @@ Route::controller(\App\Http\Controllers\Admin\ProfileController::class)->prefix(
     Route::put('security', 'updateSecurity');
 
 });
+
+Route::get('/organization/activation', [SubscriptionController::class, 'showOrganizationActivation'])->name('organization.activation');
+Route::post('/organization/activate', [BookingController::class, 'activateOrganization'])->name('organization.activate');
 
 Route::middleware(['auth', 'can:admin'])->group(function () {
     // Route::resource('subscription_plans', SubscriptionPlanController::class);
