@@ -41,7 +41,7 @@ Route::controller(\App\Http\Controllers\Admin\ProfileController::class)->prefix(
 });
 
 Route::get('/organization/activation', [SubscriptionController::class, 'showOrganizationActivation'])->name('organization.activation');
-Route::post('/organization/activate', [BookingController::class, 'activateOrganization'])->name('organization.activate');
+Route::post('/organization/activate', [SubscriptionController::class, 'activateOrganization'])->name('organization.activate');
 
 Route::middleware(['auth', 'can:admin'])->group(function () {
     // Route::resource('subscription_plans', SubscriptionPlanController::class);

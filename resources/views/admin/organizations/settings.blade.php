@@ -106,15 +106,15 @@
         <br>
         <!-- Step Tracker -->
         <div class="step-tracker">
-            <div class="step active">Step 1: Activate Organization</div>
+            <div class="step">Step 1: Activate Organization</div>
             <div class="step">Step 2: Service Setup</div>
-            <div class="step">Step 3: Organization Settings</div>
+            <div class="step active">Step 3: Organization Settings</div>
         </div>
         <br>
         <a href="javascript:void(0)">
             <img src="{{ asset('images/logo.png') }}" style="max-height: 180px; max-width: 100%;" alt="Logo">
         </a>
-        <h1 class="h3" style="margin-bottom: 10px; margin-top: 20px;">Select a Subscription Plan</h1>
+        <h1 class="h3" style="margin-bottom: 10px; margin-top: 20px;">Add Initial Organization Settings</h1>
         @if (count($errors->getBag('default')))
             @foreach ($errors->getBag('default')->getMessages() as $error)
                 <div class="alert alert-danger mb-3 small p-2" role="alert">
@@ -123,35 +123,7 @@
             @endforeach
         @endif
 
-        <!-- Subscription Plans Section -->
-        {{-- <br> --}}
-        <div class="pricing-section">
-            @foreach ($plans as $plan)
-                {{-- <form method="POST" action="{{ route('admin.organization.activate') }}"> --}}
-                @csrf
-                <div class="pricing-card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $plan->name }}</h5>
-                        <p class="card-text">Max Bookings:
-                            {{ $plan->max_bookings == 0 ? 'Unlimited' : $plan->max_bookings }}</p>
-                        <p class="card-text">SMS Notifications: {{ $plan->has_sms_notifications ? 'Yes' : 'No' }}
-                        </p>
-                        <p class="card-text">Email Notifications:
-                            {{ $plan->has_email_notifications ? 'Yes' : 'No' }}
-                        </p>
-                        <p class="card-text">Duration: {{ $plan->duration_in_days }} days</p>
-                        <h3 class="card-price">${{ number_format($plan->price, 2) }}/pm</h3>
-                        <form id="logout-form" action="{{ route('admin.organization.activate') }}" method="POST">
-                            @csrf
-                            <input type="text" hidden value="{{ $plan->id }}" name="plan_id">
-                            <button class="btn btn-primary" type="submit">Choose Plan</button>
-                        </form>
 
-                    </div>
-                </div>
-                {{-- </form> --}}
-            @endforeach
-        </div>
         <br>
         <a style="width:20%" class="btn btn-primary" href="{{ route('logout') }}"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

@@ -33,9 +33,45 @@ class SubscriptionController extends Controller
 
     public function activateOrganization(Request $request)
     {
+        $plan = SubscriptionPlan::findOrFail($request->input('plan_id'));
+        $organization = Auth::user()->organizations->first();
+
+        $nextBillingDate = $this->calculateNextBillingDate();
+
+        // Handle payment and subscription activation
+        $paymentData = [
+            'amount' => $plan->price,
+            'recurring_amount' => $plan->price,
+            'item_name' => $plan->name,
+            'custom_str1' => $organization->id,
+            'custom_str2' => $plan->id,
+            'billing_date' => $nextBillingDate->format('Y-m-d'),
+        ];
+
+        $newPayFastService = new PayFastService();
+
+        $this->payFastService =  $newPayFastService;
+
+        $response = $newPayFastService->createPayment($paymentData);
+
+        // Set the PayFast URL based on the environment
+        $payfastUrl = \App::isProduction() ? 'https://www.payfast.co.za/eng/process' : 'https://sandbox.payfast.co.za/eng/process';
+
+        // Remove empty values and sort the data array by key
+        $data = $response;
+
+        // Generate the HTML form with the data and automatically submit it
+        $htmlForm = '<form id="payfast_form" action="'.$payfastUrl.'" method="POST">';
+        foreach ($data as $name => $value) {
+            $htmlForm .= '<input type="hidden" name="'.$name.'" value="'.htmlspecialchars($value, ENT_QUOTES, 'UTF-8').'">';
+        }
+        $htmlForm .= '</form>';
+        $htmlForm .= '<script type="text/javascript">document.getElementById("payfast_form").submit();</script>';
+
+        return response($htmlForm);
 
 
-        return response()->json(['redirect_url' => $response['redirect_url']]);
+        // return response()->json(['redirect_url' => $response['redirect_url']]);
     }
 
     /**
@@ -266,5 +302,15 @@ class SubscriptionController extends Controller
     public function paymentCancel(Request $request)
     {
         return view('subscriptions.cancel')->with('message', 'Your payment was canceled.');
+    }
+
+    private function calculateNextBillingDate()
+    {
+        $currentDate = now();
+
+        return $currentDate->day < $currentDate->daysInMonth
+                ? $currentDate->copy()->endOfMonth()
+                : $currentDate->copy()->addMonthNoOverflow()->endOfMonth();
+
     }
 }
