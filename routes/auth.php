@@ -25,7 +25,11 @@ Route::controller(\App\Http\Controllers\Auth\AdminLoginController::class)->prefi
 
     Route::get('login', 'showLoginForm')->name('login');
 
+    Route::get('register', 'showRegForm')->name('register');
+
     Route::post('login', 'login');
+
+    Route::post('register', 'register');
 
 });
 

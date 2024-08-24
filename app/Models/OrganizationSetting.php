@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Abstracts\CrudAuthModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class OrganizationSetting extends Model
+class OrganizationSetting extends CrudAuthModel
 {
     use HasFactory;
 

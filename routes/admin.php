@@ -26,6 +26,8 @@ Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 
 Route::resource('settings', \App\Http\Controllers\Admin\SettingController::class)->except(['create', 'store', 'destroy']);
 
+Route::resource('organization_settings', \App\Http\Controllers\Admin\OrganizationSettingsController::class);
+
 
 Route::controller(\App\Http\Controllers\Admin\ProfileController::class)->prefix('profile')->name('profile.')->group(function () {
 

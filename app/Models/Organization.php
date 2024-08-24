@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Abstracts\CrudAuthModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Organization extends Model
+class Organization extends CrudAuthModel
 {
     use HasFactory;
 
@@ -19,7 +20,7 @@ class Organization extends Model
         'status',
     ];
 
-    const STATUSES = ['Active', 'Inactive', 'Suspended'];
+    const STATUSES = ['Pending Activation','Active', 'Inactive', 'Suspended'];
 
     protected static function boot()
     {

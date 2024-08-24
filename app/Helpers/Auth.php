@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Organization;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,18 @@ class Auth
      * Get logged in user from request.
      */
     public static function user(Request $request, string $driver = 'session'): ?User
+    {
+        if (static::guard($driver) && $user = $request->user(static::guard($driver))) {
+            return $user;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get logged in user organization.
+     */
+    public static function userOrganization(Request $request, string $driver = 'session'): ?Organization
     {
         if (static::guard($driver) && $user = $request->user(static::guard($driver))) {
             return $user;
