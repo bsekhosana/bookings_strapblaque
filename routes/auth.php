@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,10 @@ Route::post('otp/resend', [\App\Http\Controllers\Auth\OtpController::class, 'res
 
 
 Route::post('logout', [\App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
+
+Route::post('/payfast/notify', [SubscriptionController::class, 'paymentNotify'])->name('subscription.payment.notify');
+
+Route::get('/payfast/return', [SubscriptionController::class, 'paymentRedirect'])->name('subscription.payment.return');
 
 
 Route::controller(\App\Http\Controllers\Auth\AdminLoginController::class)->prefix('admin')->name('admin.')->group(function () {

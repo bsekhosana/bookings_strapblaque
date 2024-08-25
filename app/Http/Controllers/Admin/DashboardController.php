@@ -19,6 +19,9 @@ class DashboardController extends Controller
 
         if ($organization) {
             if ($organization->status === 'Active') {
+                if(count($organization->services) == 0){
+                    return redirect()->route('admin.organization.services');
+                }
                 // Proceed to the dashboard
                 return view('admin.dashboard');
             } elseif ($organization->status === 'Pending Activation') {

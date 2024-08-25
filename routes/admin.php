@@ -41,6 +41,7 @@ Route::controller(\App\Http\Controllers\Admin\ProfileController::class)->prefix(
 });
 
 Route::get('/organization/activation', [SubscriptionController::class, 'showOrganizationActivation'])->name('organization.activation');
+Route::get('/organization/services', [SubscriptionController::class, 'showOrganizationServices'])->name('organization.services');
 Route::post('/organization/activate', [SubscriptionController::class, 'activateOrganization'])->name('organization.activate');
 
 Route::middleware(['auth', 'can:admin'])->group(function () {
@@ -57,4 +58,4 @@ Route::get('/subscription/plans', [SubscriptionController::class, 'showPlans'])-
 Route::post('/subscription/payment', [SubscriptionController::class, 'initiatePayment'])->name('subscription.payment');
 Route::get('/payment/success', [SubscriptionController::class, 'paymentSuccess'])->name('subscription.payment.success');
 Route::get('/payment/cancel', [SubscriptionController::class, 'paymentCancel'])->name('subscription.payment.cancel');
-Route::post('/payment/notify', [SubscriptionController::class, 'paymentNotify'])->name('subscription.payment.notify');
+// Route::post('/payment/notify', [SubscriptionController::class, 'paymentNotify'])->name('subscription.payment.notify');

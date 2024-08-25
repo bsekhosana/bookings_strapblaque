@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organization;
+use App\Models\Payment;
 use App\Models\Subscription;
 use App\Models\SubscriptionPlan;
 use App\Services\PayFastService;
@@ -26,9 +27,26 @@ class SubscriptionController extends Controller
 
     public function showOrganizationActivation()
     {
+        $organization = auth()->user()->organizations->first();
+
+        if(!empty($organization && $organization->status == 'Active')){
+
+            return redirect()->route('admin.organization.services');
+
+        }
+
         $plans = SubscriptionPlan::where('status', 'Active')->get();
 
         return view('admin.organizations.activation', compact('plans'));
+    }
+
+    public function showOrganizationServices()
+    {
+        // $organization = auth('admin')->user->organizations->first();
+
+        $organization = auth()->user()->organizations->first(); // Assuming the admin is authenticated
+
+        return view('admin.organizations.services_setup', compact('organization'));
     }
 
     public function activateOrganization(Request $request)
@@ -43,8 +61,8 @@ class SubscriptionController extends Controller
             'amount' => $plan->price,
             'recurring_amount' => $plan->price,
             'item_name' => $plan->name,
-            'custom_str1' => $organization->id,
-            'custom_str2' => $plan->id,
+            'custom_str1' => "$organization->id",
+            'custom_str2' => "$plan->id",
             'billing_date' => $nextBillingDate->format('Y-m-d'),
         ];
 
@@ -53,6 +71,8 @@ class SubscriptionController extends Controller
         $this->payFastService =  $newPayFastService;
 
         $response = $newPayFastService->createPayment($paymentData);
+
+        // dd($response);
 
         // Set the PayFast URL based on the environment
         $payfastUrl = \App::isProduction() ? 'https://www.payfast.co.za/eng/process' : 'https://sandbox.payfast.co.za/eng/process';
@@ -170,63 +190,6 @@ class SubscriptionController extends Controller
         return redirect()->route('subscription.details')->with('success', 'Subscription canceled successfully.');
     }
 
-    /**
-     * @OA\Post(
-     *     path="/api/subscriptions/initiate-payment",
-     *     tags={"Subscriptions"},
-     *     summary="Initiate payment for a subscription plan",
-     *     description="Initiates payment for a subscription plan and redirects to the payment gateway.",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="plan_id", type="integer", example=1)
-     *         )
-     *     ),
-     *     @OA\Response(response=302, description="Redirect to payment gateway"),
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=401, description="Unauthenticated"),
-     *     @OA\Response(response=403, description="Unauthorized")
-     * )
-     */
-    public function initiatePayment(Request $request)
-    {
-        $plan = SubscriptionPlan::findOrFail($request->input('plan_id'));
-        $organization = Auth::user()->organization;
-
-        $paymentData = [
-            'amount' => $plan->price,
-            'item_name' => $plan->name,
-            'custom_str1' => $organization->id,
-            'custom_str2' => $plan->id,
-        ];
-
-        $response = $this->payFastService->createPayment($paymentData);
-
-        // Redirect to PayFast payment URL
-        return redirect($response['redirect_url']);
-    }
-
-    /**
-     * @OA\Post(
-     *     path="/api/subscriptions/payment-notify",
-     *     tags={"Subscriptions"},
-     *     summary="Handle payment notifications",
-     *     description="Handles payment notifications from the payment gateway.",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="payment_status", type="string", example="COMPLETE"),
-     *             @OA\Property(property="custom_str1", type="string", example="1"),
-     *             @OA\Property(property="custom_str2", type="string", example="1"),
-     *             @OA\Property(property="signature", type="string", example="abc123")
-     *         )
-     *     ),
-     *     @OA\Response(response=200, description="Payment notification processed"),
-     *     @OA\Response(response=400, description="Invalid signature"),
-     *     @OA\Response(response=401, description="Unauthenticated"),
-     *     @OA\Response(response=403, description="Unauthorized")
-     * )
-     */
     public function paymentNotify(Request $request)
     {
         // Log the PayFast notification for debugging purposes
@@ -234,13 +197,10 @@ class SubscriptionController extends Controller
 
         // Verify the signature and ensure the payment is legitimate
         $data = $request->all();
-        $signature = $this->payFastService->generateSignature($data);
 
-        if ($signature !== $request->input('signature')) {
-            \Log::warning('PayFast signature mismatch. Payment not processed.');
+        $newPayFastService = new PayFastService();
 
-            return response('Invalid signature', 400);
-        }
+        $signature = $newPayFastService->generateSignature($data);
 
         // Verify payment status
         if ($request->input('payment_status') === 'COMPLETE') {
@@ -250,26 +210,49 @@ class SubscriptionController extends Controller
 
             $subscriptionPlan = SubscriptionPlan::find($planId);
             $organization = Organization::find($organizationId);
-
-            if ($subscriptionPlan && $organization) {
-                // Update or create the subscription
-                $subscription = Subscription::updateOrCreate(
-                    ['organization_id' => $organization->id],
-                    [
-                        'subscription_plan_id' => $subscriptionPlan->id,
-                        'start_date' => now(),
-                        'end_date' => now()->addDays($subscriptionPlan->duration_in_days),
-                        'status' => 'Active',
-                    ]
-                );
-
-                \Log::info('Subscription updated successfully for organization ID: '.$organizationId);
+            $subscription = Subscription::whereOrganizationId($organizationId);
+            $nextDebitDate = $this->calculateNextBillingDate();
+            if(!empty($subscription)){
+                $subscription->update([
+                    'end_date' => $nextDebitDate->format('Y-m-d'),
+                    'status' => 'Active',
+                ]);
+            }else{
+                $subscription = Subscription::create([
+                    'subscription_plan_id' => $subscriptionPlan->id,
+                    'start_date' => now(),
+                    'end_date' => $nextDebitDate->format('Y-m-d'),
+                    'status' => 'Active',
+                ]);
             }
+
+            $organization->update([
+                'status' => 'Active',
+            ]);
+
+            Payment::create([
+                'status' => 'Paid',
+                'organization_id' => $organizationId,
+                'subscription_id' => $subscription->id,
+                'amount' => $request->input('amount_gross'),
+                'pf_payment_id' => $request->input('pf_payment_id'),
+                'token' => $request->input('token'),
+            ]);
+
         } else {
+
             \Log::warning('Payment was not successful.');
+
         }
 
-        return response('Payment notification processed', 200);
+        return response('Notification received', 200);
+
+        // return view('admin.dashboard')->with('message', 'Your payment was '.$request->input('payment_status'));
+    }
+
+    public function paymentRedirect(Request $request)
+    {
+        return redirect()->route('admin.dashboard')->with('message', 'Your payment was redirected.');
     }
 
     /**
@@ -301,7 +284,7 @@ class SubscriptionController extends Controller
      */
     public function paymentCancel(Request $request)
     {
-        return view('subscriptions.cancel')->with('message', 'Your payment was canceled.');
+        return view('admin.dashboard')->with('message', 'Your payment was canceled.');
     }
 
     private function calculateNextBillingDate()

@@ -18,7 +18,7 @@ class PayFastService
 
     protected $notifyUrl;
 
-    protected $testUrl = 'https://a3de-41-116-34-238.ngrok-free.app';
+    protected $testUrl = 'https://4d9c-41-122-7-49.ngrok-free.app';
 
     public function __construct()
     {
@@ -29,15 +29,15 @@ class PayFastService
         // $this->cancelUrl = config('payfast.cancel_url');
         // $this->notifyUrl = config('payfast.notify_url');
 
-        $this->returnUrl = \App::isProduction() ? config('payfast.return_url') : "$this->testUrl/payment/notify";
-        $this->cancelUrl = \App::isProduction() ? config('payfast.cancel_url') : "$this->testUrl/payment/cancel";
-        $this->notifyUrl = \App::isProduction() ? config('payfast.notify_url') : "$this->testUrl/payment/notify";
+        $this->returnUrl = \App::isProduction() ? config('payfast.return_url') : "$this->testUrl/payfast/return";
+        $this->cancelUrl = \App::isProduction() ? config('payfast.cancel_url') : "$this->testUrl/admin/payment/cancel";
+        $this->notifyUrl = \App::isProduction() ? config('payfast.notify_url') : "$this->testUrl/payfast/notify";
     }
 
     public function createPayment(array $data)
     {
         // Prepare payment data
-        $paymentData = [
+        $paymentData = array_merge($data, [
             'merchant_id' => $this->merchantId,
             'merchant_key' => $this->merchantKey,
             'return_url' => $this->returnUrl,
@@ -48,7 +48,7 @@ class PayFastService
             'subscription_type' => 1,
             'cycles' => 0,
             'frequency' => 3
-        ];
+        ]);
 
         // Generate signature for security
         $signature = $this->generateSignature($paymentData);

@@ -59,20 +59,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(AdminRequest $request)
-    {
-        $admin = Admin::create($request->validated());
-
-        \Alert::crud($admin, \Alert::Stored, 'admin');
-
-        return redirect()->route('admin.admins.show', $admin);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @return \Illuminate\Contracts\Support\Renderable

@@ -13,5 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        'admin/payment/notify', // Add this line to exclude CSRF check
+        '/payfast/notify',
     ];
 }

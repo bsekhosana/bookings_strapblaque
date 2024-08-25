@@ -27,7 +27,6 @@ class User extends CrudAuthModel implements MustVerifyEmail
         'email',
         'mobile',
         'avatar',
-        'mobile',
         'password',
     ];
 

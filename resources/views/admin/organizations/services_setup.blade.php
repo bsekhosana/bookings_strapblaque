@@ -39,6 +39,11 @@
             border-color: #f9322c;
         }
 
+        .step-tracker .passed {
+            color: #10c03c;
+            border-color: #10c03c;
+        }
+
         .pricing-section {
             max-width: 80%;
             margin: 20px auto;
@@ -106,7 +111,7 @@
         <br>
         <!-- Step Tracker -->
         <div class="step-tracker">
-            <div class="step">Step 1: Activate Organization</div>
+            <div class="step passed">Step 1: Activate Organization</div>
             <div class="step active">Step 2: Service Setup</div>
             <div class="step">Step 3: Organization Settings</div>
         </div>

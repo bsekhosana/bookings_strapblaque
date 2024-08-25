@@ -56,4 +56,9 @@ class Booking extends CrudAuthModel
     {
         return $this->belongsTo(User::class);
     }
+
+    public function organizationStaff()
+    {
+        return $this->belongsTo(OrganizationStaff::class);
+    }
 }
