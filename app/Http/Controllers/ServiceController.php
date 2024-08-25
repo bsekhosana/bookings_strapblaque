@@ -161,6 +161,6 @@ class ServiceController extends ApiController
     {
         $service->delete();
 
-        return $this->respondNoContent();
+        return response()->json(['success' => true,], 201);
     }
 }

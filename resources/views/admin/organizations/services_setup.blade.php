@@ -103,6 +103,36 @@
                 margin: 10px 0;
             }
         }
+
+        /* Style for ul and li to resemble table format */
+        .services-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .services-list li {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .service-item {
+            flex: 1;
+            padding: 5px;
+        }
+
+        .service-actions {
+            flex: 0;
+        }
+
+        .no-services {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #999;
+        }
     </style>
 </head>
 
@@ -164,10 +194,7 @@
             </div>
 
         </form>
-        <!-- Placeholder for displaying the added services -->
-        <div id="services-list" class="mt-4">
-            <!-- Services will be appended here via AJAX -->
-        </div>
+
 
         <div class="col-12" style="margin-top:3%">
             <div class="card">
@@ -175,42 +202,23 @@
                     Organization Services
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0 align-middle">
-                            <thead>
-                                <tr>
-                                    {{-- <th scope="col" width="180">UID</th> --}}
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Duration</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Created</th>
-                                    <th scope="col">Action</th>
-                                    {{-- <th scope="col" width="170">Actions</th> --}}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($organization->services as $model)
-                                    <tr>
-                                        {{-- <td class="cell">{{ $model->uid }}</td> --}}
-                                        <td class="cell">{{ $model->name }}</td>
-                                        <td class="cell">{{ $model->duration }}</td>
-                                        <td class="cell">{{ $model->description }}</td>
-                                        <td class="cell">{{ $model->created_at }}</td>
-                                        <td class="cell">
-                                            <button class="btn btn-danger btn-sm delete-service"
-                                                data-id="{{ $model->id }}"><i
-                                                    class="fas fa-trash-alt"></i></button>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="9" class="text-center">No requests have been made.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-
-                    </div>
+                    <!-- Placeholder for displaying the added services -->
+                    <ul id="services-ul-list" class="services-list">
+                        @forelse($organization->services as $model)
+                            <li data-id="{{ $model->id }}">
+                                <span class="service-item">{{ $model->name }}</span>
+                                <span class="service-item">{{ $model->duration }} mins</span>
+                                <span class="service-item">{{ $model->description }}</span>
+                                <span class="service-item">{{ $model->created_at->format('Y-m-d H:i') }}</span>
+                                <span class="service-actions">
+                                    <button class="btn btn-danger btn-sm delete-service"
+                                        data-id="{{ $model->id }}"><i class="fas fa-trash-alt"></i></button>
+                                </span>
+                            </li>
+                        @empty
+                            <li class="no-services">No services have been added yet.</li>
+                        @endforelse
+                    </ul>
                 </div>
             </div>
         </div>
@@ -251,24 +259,27 @@
                 };
 
                 // AJAX request to add the service
+                // AJAX request to add the service
                 $.ajax({
                     url: '{{ route('admin.services.store') }}',
                     method: 'POST',
                     data: formData,
                     success: function(response) {
                         if (response.success) {
-                            // Add new service to the table
-                            $('#organization-services').append(`
-                        <tr data-id="${response.service.id}">
-                            <td class="cell">${response.service.name}</td>
-                            <td class="cell">${response.service.duration}</td>
-                            <td class="cell">${response.service.description}</td>
-                            <td class="cell">${new Date(response.service.created_at).toLocaleString()}</td>
-                            <td class="cell">
-                                <button class="btn btn-danger btn-sm delete-service" data-id="${response.service.id}"><i class="fas fa-trash-alt"></i></button>
-                            </td>
-                        </tr>
-                    `);
+                            // Remove the 'No services' message if present
+                            $('.no-services').remove();
+                            // Add new service to the list
+                            $('#services-ul-list').append(`
+                                <li data-id="${response.service.id}">
+                                    <span class="service-item">${response.service.name}</span>
+                                    <span class="service-item">${response.service.duration} mins</span>
+                                    <span class="service-item">${response.service.description}</span>
+                                    <span class="service-item">${new Date(response.service.created_at).toLocaleString()}</span>
+                                    <span class="service-actions">
+                                        <button class="btn btn-danger btn-sm delete-service" data-id="${response.service.id}"><i class="fas fa-trash-alt"></i></button>
+                                    </span>
+                                </li>
+                            `);
 
                             // Clear input fields
                             $('#name').val('');
@@ -287,15 +298,21 @@
             // Event listener for deleting a service
             $(document).on('click', '.delete-service', function() {
                 let serviceId = $(this).data('id');
-                let row = $(this).closest('tr');
+                let listItem = $(this).closest('li');
 
-                // AJAX request to delete the service
                 $.ajax({
                     url: `/admin/services/${serviceId}`,
                     method: 'DELETE',
                     success: function(response) {
+                        console.log('response', response);
                         if (response.success) {
-                            row.remove();
+                            listItem.remove();
+                            // Check if list is empty and show 'No services' message if necessary
+                            if ($('#services-ul-list li').length === 0) {
+                                $('#services-ul-list').append(
+                                    '<li class="no-services">No services have been added yet.</li>'
+                                );
+                            }
                         } else {
                             alert('Failed to delete service. Please try again.');
                         }
