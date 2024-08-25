@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\OrganizationController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SubscriptionPlanController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,8 @@ Route::resource('admins', \App\Http\Controllers\Admin\AdminController::class);
 Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 
 Route::resource('settings', \App\Http\Controllers\Admin\SettingController::class)->except(['create', 'store', 'destroy']);
+
+Route::resource('services', ServiceController::class);
 
 Route::resource('organization_settings', \App\Http\Controllers\Admin\OrganizationSettingsController::class);
 

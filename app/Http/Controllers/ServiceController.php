@@ -62,7 +62,24 @@ class ServiceController extends ApiController
      */
     public function store(Request $request)
     {
-        // Implementation for storing a service goes here
+       // Validate the request data
+       $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'duration' => 'required|integer',
+            'description' => 'nullable|string',
+            'organization_id' => 'required|string',
+        ]);
+
+        // Create a new service
+        $service = Service::create([
+            'organization_id' => $validatedData['organization_id'], // Assuming user is linked to an organization
+            'name' => $validatedData['name'],
+            'duration' => $validatedData['duration'],
+            'description' => $validatedData['description'],
+        ]);
+
+        // Return success response for AJAX
+        return response()->json(['success' => true, 'service' => $service], 201);
     }
 
     /**

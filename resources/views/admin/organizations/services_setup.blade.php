@@ -112,32 +112,201 @@
         <!-- Step Tracker -->
         <div class="step-tracker">
             <div class="step passed">Step 1: Activate Organization</div>
-            <div class="step active">Step 2: Service Setup</div>
+            <div class="step active">Step 2: Services Setup</div>
             <div class="step">Step 3: Organization Settings</div>
         </div>
-        <br>
-        <a href="javascript:void(0)">
-            <img src="{{ asset('images/logo.png') }}" style="max-height: 180px; max-width: 100%;" alt="Logo">
-        </a>
-        <h1 class="h3" style="margin-bottom: 10px; margin-top: 20px;">Add Booking Services</h1>
-        @if (count($errors->getBag('default')))
-            @foreach ($errors->getBag('default')->getMessages() as $error)
-                <div class="alert alert-danger mb-3 small p-2" role="alert">
-                    {{ $error[0] }}
-                </div>
-            @endforeach
-        @endif
 
+        <form method="POST" id='service-form'>
+            @csrf
+            <br>
+            <a href="/">
+                <img src="{{ asset('images/logo.png') }}" style="max-height: 180px; max-width: 100%;" alt="Logo">
+            </a>
+            <br>
+            <h1 class="h3 mb-4 mt-5 fw-normal">Add {{ $organization->name }} services</h1>
+            @if (count($errors->getBag('default')))
+                @foreach ($errors->getBag('default')->getMessages() as $error)
+                    <div class="alert alert-danger mb-3 small p-2" role="alert">
+                        {{ $error[0] }}
+                    </div>
+                @endforeach
+            @endif
+
+            <!-- Bootstrap Row for responsive design -->
+            <div class="text-center">
+                <!-- Organization Details Card -->
+                <div class="ccol-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h2 class="h5 mb-3">Service Details</h2>
+                            <div class="form-floating mb-2">
+                                <input type="text" class="form-control shadow" name="name" id="name"
+                                    placeholder="Service Name" value="{{ old('name') }}" required>
+                                <label for="name">Service Name</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="number" class="form-control shadow" name="duration" id="duration"
+                                    placeholder="Service Duration" value="{{ old('duration') }}" required>
+                                <label for="duration">Service Duration</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="text" class="form-control shadow" name="description" id="description"
+                                    placeholder="Service Description" value="{{ old('description') }}" required>
+                                <label for="description">Service Description</label>
+                            </div>
+                        </div>
+                        <input type="text" id="organization_id" value="{{ $organization->id }}" hidden>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" type="submit">Create Service</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <!-- Placeholder for displaying the added services -->
+        <div id="services-list" class="mt-4">
+            <!-- Services will be appended here via AJAX -->
+        </div>
+
+        <div class="col-12" style="margin-top:3%">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    Organization Services
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0 align-middle">
+                            <thead>
+                                <tr>
+                                    {{-- <th scope="col" width="180">UID</th> --}}
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Duration</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Created</th>
+                                    <th scope="col">Action</th>
+                                    {{-- <th scope="col" width="170">Actions</th> --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($organization->services as $model)
+                                    <tr>
+                                        {{-- <td class="cell">{{ $model->uid }}</td> --}}
+                                        <td class="cell">{{ $model->name }}</td>
+                                        <td class="cell">{{ $model->duration }}</td>
+                                        <td class="cell">{{ $model->description }}</td>
+                                        <td class="cell">{{ $model->created_at }}</td>
+                                        <td class="cell">
+                                            <button class="btn btn-danger btn-sm delete-service"
+                                                data-id="{{ $model->id }}"><i
+                                                    class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="9" class="text-center">No requests have been made.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <br>
         <a style="width:20%" class="btn btn-primary" href="{{ route('logout') }}"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <div class="dropdown-item-icon">Logout <i class="fas fa-fw fa-arrow-right-from-bracket"></i></div>
         </a>
+
+        <p class="mt-5 mb-3 text-muted small">{{ config('app.name') }} &copy; {{ date('Y') }}. All rights
+            reserved.</p>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
     </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            // Event listener for the form submission to add a new service
+            $('#service-form').on('submit', function(e) {
+                e.preventDefault();
+
+                // Collect form data
+                let formData = {
+                    name: $('#name').val(),
+                    duration: $('#duration').val(),
+                    description: $('#description').val(),
+                    organization_id: $('#organization_id').val(),
+                };
+
+                // AJAX request to add the service
+                $.ajax({
+                    url: '{{ route('admin.services.store') }}',
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        if (response.success) {
+                            // Add new service to the table
+                            $('#organization-services').append(`
+                        <tr data-id="${response.service.id}">
+                            <td class="cell">${response.service.name}</td>
+                            <td class="cell">${response.service.duration}</td>
+                            <td class="cell">${response.service.description}</td>
+                            <td class="cell">${new Date(response.service.created_at).toLocaleString()}</td>
+                            <td class="cell">
+                                <button class="btn btn-danger btn-sm delete-service" data-id="${response.service.id}"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                    `);
+
+                            // Clear input fields
+                            $('#name').val('');
+                            $('#duration').val('');
+                            $('#description').val('');
+                        } else {
+                            alert('Failed to add service. Please try again.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Error: ' + xhr.responseText);
+                    }
+                });
+            });
+
+            // Event listener for deleting a service
+            $(document).on('click', '.delete-service', function() {
+                let serviceId = $(this).data('id');
+                let row = $(this).closest('tr');
+
+                // AJAX request to delete the service
+                $.ajax({
+                    url: `/admin/services/${serviceId}`,
+                    method: 'DELETE',
+                    success: function(response) {
+                        if (response.success) {
+                            row.remove();
+                        } else {
+                            alert('Failed to delete service. Please try again.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Error: ' + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

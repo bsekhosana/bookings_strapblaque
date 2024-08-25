@@ -53,3 +53,5 @@ Route::get('/swagger-ui', function () {
 // Route::get('/payment/success', [SubscriptionController::class, 'paymentSuccess'])->name('subscription.payment.success');
 // Route::get('/payment/cancel', [SubscriptionController::class, 'paymentCancel'])->name('subscription.payment.cancel');
 // Route::post('/payment/notify', [SubscriptionController::class, 'paymentNotify'])->name('subscription.payment.notify');
+
+// Route::post('/services/add', [ServiceController::class, 'store'])->name('services.add');

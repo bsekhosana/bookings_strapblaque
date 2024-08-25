@@ -107,7 +107,7 @@
         <!-- Step Tracker -->
         <div class="step-tracker">
             <div class="step active">Step 1: Activate Organization</div>
-            <div class="step">Step 2: Service Setup</div>
+            <div class="step">Step 2: Services Setup</div>
             <div class="step">Step 3: Organization Settings</div>
         </div>
         <br>
@@ -157,6 +157,8 @@
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <div class="dropdown-item-icon">Logout <i class="fas fa-fw fa-arrow-right-from-bracket"></i></div>
         </a>
+        <p class="mt-5 mb-3 text-muted small">{{ config('app.name') }} &copy; {{ date('Y') }}. All rights
+            reserved.</p>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
