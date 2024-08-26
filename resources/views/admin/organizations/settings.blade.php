@@ -39,6 +39,11 @@
             border-color: #f9322c;
         }
 
+        .step-tracker .passed {
+            color: #10c03c;
+            border-color: #10c03c;
+        }
+
         .pricing-section {
             max-width: 80%;
             margin: 20px auto;

@@ -201,7 +201,7 @@
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" role="switch"
                                             id="is_bookable" name="is_bookable" value="0"
-                                            {{ 'is_bookable' ? 'checked' : null }}>
+                                            {{ old('is_bookable', 0) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="example-switch">Is Bookable</label>
                                     </div>
                                     @error('example-switch')
@@ -236,7 +236,7 @@
                                                 {{ $model->last_name }}</span>
 
                                             <span
-                                                class="service-item">{{ $model->is_bookable ? 'Can book' : 'Can\'t book' }}</span>
+                                                class="service-item">{{ $model->is_bookable ? 'Can Book' : 'Can\'t Book' }}</span>
                                             <span class="service-actions">
                                                 <button type="button" class="btn btn-danger btn-sm delete-service"
                                                     data-id="{{ $model->id }}"><i
@@ -251,7 +251,9 @@
                             <div class="card-footer">
                                 <button class="btn"
                                     style=" background-color: green; {{ count($organization->staff) == 0 ? 'display:none;' : '' }}"
-                                    id="next" type="button">Confirm Staff Member(s)</button>
+                                    id="next"
+                                    onclick="window.location.href='{{ route('admin.organization.settings') }}'"
+                                    type="button">Confirm Staff Member(s)</button>
                             </div>
                         </div>
                     </div>
@@ -294,7 +296,7 @@
                     last_name: $('#last_name').val(),
                     email: $('#email').val(),
                     mobile: $('#mobile').val(),
-                    is_bookable: $('#is_bookable').val(),
+                    is_bookable: $('#is_bookable').prop('checked') ? 1 : 0,
                     organization_id: $('#organization_id').val(),
                 };
 
@@ -316,6 +318,7 @@
                                 <li data-id="${response.staff.id}">
                                     <span class="service-item">${response.staff.organization_title}</span>
                                     <span class="service-item">${response.staff.first_name} ${response.staff.last_name}</span>
+                                    <span class="service-item">${response.staff.is_bookable ? 'Can Book' : 'Can\'t Book'}</span>
                                     <span class="service-actions">
                                         <button class="btn btn-danger btn-sm delete-service" data-id="${canBook}"><i class="fas fa-trash-alt"></i></button>
                                     </span>

@@ -40,6 +40,28 @@ class SubscriptionController extends Controller
         return view('admin.organizations.activation', compact('plans'));
     }
 
+    public function showOrganizationSettings()
+    {
+        $organization = auth()->user()->organizations->first();
+
+        if(!empty($organization && $organization->status == 'Active')){
+
+            if(count($organization->settings) > 0){
+
+                return redirect()->route('admin.dashboard');
+
+            }
+
+            return  view('admin.organizations.settings', compact('organization'));
+
+        }
+
+        $plans = SubscriptionPlan::where('status', 'Active')->get();
+
+        return view('admin.organizations.activation', compact('plans'));
+    }
+
+
     public function showOrganizationStaff()
     {
         $organization = auth()->user()->organizations->first();

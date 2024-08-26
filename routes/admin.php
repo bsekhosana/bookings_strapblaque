@@ -52,6 +52,7 @@ Route::controller(\App\Http\Controllers\Admin\ProfileController::class)->prefix(
 Route::get('/organization/activation', [SubscriptionController::class, 'showOrganizationActivation'])->name('organization.activation');
 Route::get('/organization/services', [SubscriptionController::class, 'showOrganizationServices'])->name('organization.services');
 Route::get('/organization/staff', [SubscriptionController::class, 'showOrganizationStaff'])->name('organization.staff');
+Route::get('/organization/settings', [SubscriptionController::class, 'showOrganizationSettings'])->name('organization.settings');
 Route::post('/organization/activate', [SubscriptionController::class, 'activateOrganization'])->name('organization.activate');
 
 Route::middleware(['auth', 'can:admin'])->group(function () {
