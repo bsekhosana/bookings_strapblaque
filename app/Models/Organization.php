@@ -41,6 +41,11 @@ class Organization extends CrudAuthModel
         return $this->hasMany(Service::class);
     }
 
+    public function staff()
+    {
+        return $this->hasMany(OrganizationStaff::class);
+    }
+
     // Define the relationship with Admin
     public function admins()
     {

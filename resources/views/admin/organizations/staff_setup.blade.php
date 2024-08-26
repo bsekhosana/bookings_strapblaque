@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#f9322c" />
-    <title>Services Setup</title>
+    <title>Organization Staff</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     @vite(['resources/js/shared/theme.js', 'resources/js/guest.js'])
@@ -154,7 +154,7 @@
                 <img src="{{ asset('images/logo.png') }}" style="max-height: 180px; max-width: 100%;" alt="Logo">
             </a>
             <br>
-            <h1 class="h3 mb-4 mt-5 fw-normal">Add {{ $organization->name }} services</h1>
+            <h1 class="h3 mb-4 mt-5 fw-normal">Add {{ $organization->name }} staff members</h1>
             @if (count($errors->getBag('default')))
                 @foreach ($errors->getBag('default')->getMessages() as $error)
                     <div class="alert alert-danger mb-3 small p-2" role="alert">
@@ -170,26 +170,51 @@
                 <div class="col-md-6">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h2 class="h5 mb-3">Service Details</h2>
+                            <h2 class="h5 mb-3">Staff Details</h2>
                             <div class="form-floating mb-2">
-                                <input type="text" class="form-control shadow" name="name" id="name"
-                                    placeholder="Service Name" value="{{ old('name') }}" required>
-                                <label for="name">Service Name</label>
+                                <input type="text" class="form-control shadow" name="position" id="position"
+                                    placeholder="Position" value="{{ old('position') }}" required>
+                                <label for="position">Position</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="number" class="form-control shadow" name="duration" id="duration"
-                                    placeholder="Service Duration" value="{{ old('duration') }}" required>
-                                <label for="duration">Service Duration (minutes)</label>
+                                <input type="text" class="form-control shadow" name="first_name" id="first_name"
+                                    placeholder="First Name" value="{{ old('duration') }}" required>
+                                <label for="first_name">First Name</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="text" class="form-control shadow" name="description" id="description"
-                                    placeholder="Service Description" value="{{ old('description') }}" required>
-                                <label for="description">Service Description</label>
+                                <input type="text" class="form-control shadow" name="last_name" id="last_name"
+                                    placeholder="Last Name" value="{{ old('last_name') }}" required>
+                                <label for="last_name">Last Name</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="email" class="form-control shadow" name="email" id="email"
+                                    placeholder="Email" value="{{ old('email') }}" required>
+                                <label for="email">Email</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="text" class="form-control shadow" name="mobile" id="mobile"
+                                    placeholder="Mobile" value="{{ old('mobile') }}" required>
+                                <label for="mobile">Mobile</label>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="offset-md-4 col-md-7">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            id="is_bookable" name="is_bookable" value="0"
+                                            {{ 'is_bookable' ? 'checked' : null }}>
+                                        <label class="form-check-label" for="example-switch">Is Bookable</label>
+                                    </div>
+                                    @error('example-switch')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <input type="text" id="organization_id" value="{{ $organization->id }}" hidden>
                         <div class="card-footer">
-                            <button class="btn btn-primary" type="submit">Create Service</button>
+                            <button class="btn btn-primary" type="submit">Add Staff member</button>
                         </div>
                     </div>
                 </div>
@@ -199,33 +224,34 @@
                     <div class="card mb-3">
                         <div class="card">
                             <div class="card-header bg-primary text-white">
-                                Organization Services
+                                Staff Members
                             </div>
                             <div class="card-body">
                                 <!-- Placeholder for displaying the added services -->
                                 <ul id="services-ul-list" class="services-list">
-                                    @forelse($organization->services as $model)
+                                    @forelse($organization->staff as $model)
                                         <li data-id="{{ $model->id }}">
-                                            <span class="service-item">{{ $model->name }}</span>
-                                            <span class="service-item">{{ $model->duration }} mins</span>
-                                            <span class="service-item">{{ $model->description }}</span>
+                                            <span class="service-item">{{ $model->organization_title }}</span>
+                                            <span class="service-item">{{ $model->first_name }}
+                                                {{ $model->last_name }}</span>
+
+                                            <span
+                                                class="service-item">{{ $model->is_bookable ? 'Can book' : 'Can\'t book' }}</span>
                                             <span class="service-actions">
-                                                <button class="btn btn-danger btn-sm delete-service"
+                                                <button type="button" class="btn btn-danger btn-sm delete-service"
                                                     data-id="{{ $model->id }}"><i
                                                         class="fas fa-trash-alt"></i></button>
                                             </span>
                                         </li>
                                     @empty
-                                        <li class="no-services">No services have been added yet.</li>
+                                        <li class="no-services">No staff members have been added yet.</li>
                                     @endforelse
                                 </ul>
                             </div>
                             <div class="card-footer">
                                 <button class="btn"
-                                    style=" background-color: green; {{ count($organization->services) == 0 ? 'display:none;' : '' }}"
-                                    id="next" type="button"
-                                    onclick="window.location.href='{{ route('admin.organization.staff') }}'">Confirm
-                                    Service(s)</button>
+                                    style=" background-color: green; {{ count($organization->staff) == 0 ? 'display:none;' : '' }}"
+                                    id="next" type="button">Confirm Staff Member(s)</button>
                             </div>
                         </div>
                     </div>
@@ -263,16 +289,21 @@
 
                 // Collect form data
                 let formData = {
-                    name: $('#name').val(),
-                    duration: $('#duration').val(),
-                    description: $('#description').val(),
+                    title: $('#position').val(),
+                    first_name: $('#first_name').val(),
+                    last_name: $('#last_name').val(),
+                    email: $('#email').val(),
+                    mobile: $('#mobile').val(),
+                    is_bookable: $('#is_bookable').val(),
                     organization_id: $('#organization_id').val(),
                 };
+
+                console.log('formData', formData);
 
                 // AJAX request to add the service
                 // AJAX request to add the service
                 $.ajax({
-                    url: '{{ route('admin.services.store') }}',
+                    url: '{{ route('admin.staff.store') }}',
                     method: 'POST',
                     data: formData,
                     success: function(response) {
@@ -280,13 +311,13 @@
                             // Remove the 'No services' message if present
                             $('.no-services').remove();
                             // Add new service to the list
+                            var canBook = response.staff.id == 0 ? 'Can Book' : 'Cant Book';
                             $('#services-ul-list').append(`
-                                <li data-id="${response.service.id}">
-                                    <span class="service-item">${response.service.name}</span>
-                                    <span class="service-item">${response.service.duration} mins</span>
-                                    <span class="service-item">${response.service.description}</span>
+                                <li data-id="${response.staff.id}">
+                                    <span class="service-item">${response.staff.organization_title}</span>
+                                    <span class="service-item">${response.staff.first_name} ${response.staff.last_name}</span>
                                     <span class="service-actions">
-                                        <button class="btn btn-danger btn-sm delete-service" data-id="${response.service.id}"><i class="fas fa-trash-alt"></i></button>
+                                        <button class="btn btn-danger btn-sm delete-service" data-id="${canBook}"><i class="fas fa-trash-alt"></i></button>
                                     </span>
                                 </li>
                             `);
@@ -294,11 +325,15 @@
                             document.getElementById('next').style.display = null;
 
                             // Clear input fields
-                            $('#name').val('');
-                            $('#duration').val('');
-                            $('#description').val('');
+                            $('#position').val('');
+                            $('#first_name').val('');
+                            $('#last_name').val('');
+                            $('#email').val('');
+                            $('#mobile').val('');
+                            $('#is_bookable').val('');
+
                         } else {
-                            alert('Failed to add service. Please try again.');
+                            alert('Failed to add staff member. Please try again.');
                         }
                     },
                     error: function(xhr, status, error) {
@@ -309,11 +344,18 @@
 
             // Event listener for deleting a service
             $(document).on('click', '.delete-service', function() {
-                let serviceId = $(this).data('id');
+                let staffId = $(this).data('id');
                 let listItem = $(this).closest('li');
 
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                console.log('/admin/organization_staff/' + staffId);
                 $.ajax({
-                    url: `/admin/services/${serviceId}`,
+                    url: `/admin/organization_staff/${staffId}`,
                     method: 'DELETE',
                     success: function(response) {
                         console.log('response', response);
@@ -322,12 +364,12 @@
                             // Check if list is empty and show 'No services' message if necessary
                             if ($('#services-ul-list li').length === 0) {
                                 $('#services-ul-list').append(
-                                    '<li class="no-services">No services have been added yet.</li>'
+                                    '<li class="no-services">No staff members have been added yet.</li>'
                                 );
                                 document.getElementById('next').style.display = 'none';
                             }
                         } else {
-                            alert('Failed to delete service. Please try again.');
+                            alert('Failed to delete staff member. Please try again.');
                         }
                     },
                     error: function(xhr, status, error) {

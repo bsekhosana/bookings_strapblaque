@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Admin\OrganizationController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\OrganizationStaffController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SubscriptionPlanController;
+use App\Models\OrganizationStaff;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +30,10 @@ Route::resource('settings', \App\Http\Controllers\Admin\SettingController::class
 
 Route::resource('services', ServiceController::class);
 
+Route::resource('staff', OrganizationStaffController::class);
+
+Route::delete('/organization_staff/{id}', [OrganizationStaffController::class, 'destroyStaff']);
+
 Route::resource('organization_settings', \App\Http\Controllers\Admin\OrganizationSettingsController::class);
 
 
@@ -45,6 +51,7 @@ Route::controller(\App\Http\Controllers\Admin\ProfileController::class)->prefix(
 
 Route::get('/organization/activation', [SubscriptionController::class, 'showOrganizationActivation'])->name('organization.activation');
 Route::get('/organization/services', [SubscriptionController::class, 'showOrganizationServices'])->name('organization.services');
+Route::get('/organization/staff', [SubscriptionController::class, 'showOrganizationStaff'])->name('organization.staff');
 Route::post('/organization/activate', [SubscriptionController::class, 'activateOrganization'])->name('organization.activate');
 
 Route::middleware(['auth', 'can:admin'])->group(function () {

@@ -108,7 +108,8 @@
         <div class="step-tracker">
             <div class="step active">Step 1: Activate Organization</div>
             <div class="step">Step 2: Services Setup</div>
-            <div class="step">Step 3: Organization Settings</div>
+            <div class="step">Step 3: Add Staff</div>
+            <div class="step">Step 4: Organization Settings</div>
         </div>
         <br>
         <a href="javascript:void(0)">
